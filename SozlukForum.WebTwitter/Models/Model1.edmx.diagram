@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="65edfdf7a63a4ce2b890302739446af6" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="SozlukForumModel.BlokBilgileri" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.BloklananPaylasimlar" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.Etkilesimler" Width="1.5" PointX="11.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.Kategoriler" Width="1.5" PointX="3.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.Kullanicilar" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.Paylasimlar" Width="1.5" PointX="6" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.RaporBilgileri" Width="1.5" PointX="10.5" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.RaporlananPaylasimlar" Width="1.5" PointX="8.25" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.Resimler" Width="1.5" PointX="11.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.TakipEdenler" Width="1.5" PointX="3" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.TakipEdilenBilgileri" Width="1.5" PointX="5.25" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.TakipEdilenler" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.TakipEtmeBilgileri" Width="1.5" PointX="5.25" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.Yorumlar" Width="1.5" PointX="13.5" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.PaylasimMetinleri" Width="1.5" PointX="8.25" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="SozlukForumModel.YorumMetinleri" Width="1.5" PointX="15.75" PointY="10.625" IsExpanded="true" />
+        <AssociationConnector Association="SozlukForumModel.fk_BlokKullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_BlokPaylasim" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_PaylasimBlok" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_EtkilesimEntry" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_YorumEtkilesim" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_KategoriPaylasim" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_KullaniciPaylasim" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_KullaniciTakipEt" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_KullaniciYorum" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_RaporBilgiKullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_TakipEdilenKullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_PaylasimMetni" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_PaylasimRapor" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_RaporBilgiId" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_TakipEtBilgi" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_TakipEdilenBilgi" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.fk_YorumIdMetin" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.EtkilesimDislike" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.EtkilesimLike" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.PaylasimResimleri" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.ProfilResimleri" ManuallyRouted="false" />
+        <AssociationConnector Association="SozlukForumModel.YorumResimleri" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

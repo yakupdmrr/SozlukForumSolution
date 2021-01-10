@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="~/Content/css/giris.css" rel="stylesheet" />
+    <!--Icon-->
+    <link rel="shortcut icon" href="../Content/images/twitter-sozluk.png" />
+    <title>Giriş</title>
+    <style type="text/css">
+
+        .loginValidation{
+            color:white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-6 mx-auto">
+                <div class="giris">
+                    <div class="baslik">
+                        <h1>MİSAL</h1>
+                    </div>
+
+                    <form action="../Login/Login" method="post" enctype="multipart/form-data">
+
+                        @Html.ValidationSummary("", new { @class = "loginValidation" })
+
+                        <div class="form-group">
+                            <label for="EPosta">Email adresi:</label>
+                            <input type="email" name="Eposta" class="form-control" placeholder="Email" id="EPosta">
+                        </div>
+                        <div class="form-group">
+                            <label for="Parola">Şifre:</label>
+                            <input type="password" name="Parola" class="form-control" placeholder="Şifre" id="Parola">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Giriş</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

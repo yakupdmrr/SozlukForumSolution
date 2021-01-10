@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6DA7489F-94C0-456B-9965-C2BE385C069C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SozlukForum.VeriErisim</RootNamespace>
+    <AssemblyName>SozlukForum.VeriErisim</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstracts\VeriErisimBaseleri\BlokBilgisiDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\BlokPaylasimDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\PaylasimDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\PaylasimMetniDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\PaylasimResmiDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\EtkilesimDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\EtkilesimDislikeDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\EtkilesimLikeDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\KategoriDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\KullaniciDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\ProfilResmiDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\RaporBilgiDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\RaporlananPaylasimDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\ResimDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\YorumDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\YorumMetniDal.cs" />
+    <Compile Include="Abstracts\VeriErisimBaseleri\YorumResmiDal.cs" />
+    <Compile Include="Abstracts\VeritabaniIslemi.cs" />
+    <Compile Include="Concrete\Sql\SQLBlokBilgisiDal.cs" />
+    <Compile Include="Concrete\Sql\SQLBlokPaylasimDal.cs" />
+    <Compile Include="Concrete\Sql\SQLPaylasimDal.cs" />
+    <Compile Include="Concrete\Sql\SQLPaylasimMetniDal.cs" />
+    <Compile Include="Concrete\Sql\SQLPaylasimResmiDal.cs" />
+    <Compile Include="Concrete\Sql\SQLEtkilesimDal.cs" />
+    <Compile Include="Concrete\Sql\SQLEtkilesimDislikeDal.cs" />
+    <Compile Include="Concrete\Sql\SQLEtkilesimLikeDal.cs" />
+    <Compile Include="Concrete\Sql\SQLKategoriDal.cs" />
+    <Compile Include="Concrete\Sql\SQLKullaniciDal.cs" />
+    <Compile Include="Concrete\Sql\SQLProfilResmiDal.cs" />
+    <Compile Include="Concrete\Sql\SQLRaporBilgisiDal.cs" />
+    <Compile Include="Concrete\Sql\SQLRaporlananPaylasimDal.cs" />
+    <Compile Include="Concrete\Sql\SQlResimDal.cs" />
+    <Compile Include="Concrete\Sql\SQLYorumDal.cs" />
+    <Compile Include="Concrete\Sql\SQLYorumMetniDal.cs" />
+    <Compile Include="Concrete\Sql\SQLYorumResmiDal.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SozlukForum.Veriler\SozlukForum.Veriler.csproj">
+      <Project>{4169FA83-B558-4769-8696-8908279DB457}</Project>
+      <Name>SozlukForum.Veriler</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

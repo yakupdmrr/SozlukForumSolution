@@ -1,0 +1,103 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="~/Scripts/sweetalert/sweetalert.css" rel="stylesheet" />
+    <link href="~/Content/css/kaydol.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="../Content/images/twitter-sozluk.png" />
+    <title>Sözlük-Kaydol</title>
+</head>
+<body>
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-6 mx-auto">
+                <div class="giris">
+
+                    <div class="baslik">
+                        <h1>MİSAL</h1>
+                    </div>
+                    <form id="kayit_form" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="text" name="Ad" id="Ad" class="form-control" placeholder="Ad">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="Soyad" id="Soyad" class="form-control" placeholder="Soyad">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="KullaniciAdi" id="KullaniciAdi" class="form-control" placeholder="Kullanıcı adı">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="Eposta" class="form-control" placeholder="Email" id="Eposta">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="Parola" class="form-control" placeholder="Şifre" id="Parola">
+                        </div>
+                        <button type="button" onclick="KayitOl()" class="btn btn-primary">Kayıt Ol</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+
+    function KayitOl() {
+        LoadinModal("Üye Olma İşlemi","Lütfen Bekleyiniz")
+        var formData = new FormData(document.getElementById("kayit_form"));
+
+        var formInput = document.getElementById("kayit_form").getElementsByTagName("input");
+        var msg = "";
+        for (var i = 0; i < formInput.length; i++) {
+            if (formInput[i].value == "") {
+                msg = formInput[i].textContent + ' Kayıt Formunda Boş Alanlar var!\n';
+            }
+        }
+        if (msg) {
+            Alert_Error(msg);
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "../Account/Index",
+            data: formData,
+            async: true,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.drm) {
+                    swal({
+                        title: "Üye Olma",
+                        text: "Başarıyla Üye Olundu ",
+                        type: 'success',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Tamam',
+                        html: true
+                    }, function () {
+                             window.location.href = '@Url.Action("Login","Login")'
+                    });
+                }
+                else {
+                    Alert_Error("Başarısız Üyelik", data.msg);
+                    document.getElementById("kayit_form").reset();
+                }
+            }, error: function (data) {
+                console.log(data.responseText);
+            }
+        });
+    }
+</script>
+
+<script src="~/Scripts/sweetalert/sweetalert-dev.js"></script>
+<script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
+<script src="~/Scripts/Alert.js"></script>

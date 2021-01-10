@@ -1,0 +1,568 @@
+body {
+    background-color: rgb(14, 14, 16);
+    padding-right: 0px !important;
+    margin-right: 0px !important;
+}
+
+.profil {
+    background-color: transparent;
+    height: auto;
+}
+
+.navbar {
+    background-color: rgb(24, 24, 27) !important;
+}
+
+.kapak-resmi .foto {
+    display: block;
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin: auto;
+    bottom: 200px;
+    margin-bottom: -200px;
+}
+
+.kapak-resmi .isim {
+    display: block;
+    position: relative;
+    text-align: center;
+    color: rgb(233, 233, 241);
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+.tab-content {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+
+.tab-pane {
+    width: 100% !important;
+}
+
+.tabs {
+    display: inline-block;
+    width: 25%;
+    background-color: transparent;
+    margin: 0;
+    border: none;
+    text-align: center;
+    background-color: rgb(14, 14, 16);
+}
+
+.tabs .nav-link {
+    margin: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: transparent;
+    border-radius: 10px !important;
+}
+
+.nav-item a {
+    color: rgb(233, 233, 239);
+    background-color: transparent;
+}
+
+
+.kapak-resmi {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 220px;
+}
+
+
+.kapak-resmi img {
+    width: 100%;
+    height: 220px;
+    object-position: center;
+    object-fit: cover;
+}
+
+
+/*kullanıcılar*/
+.users {
+    background-color: rgb(31, 31, 31);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    width: 100%;
+    padding: 5px;
+    height: auto;
+}
+
+.users a:hover{
+    text-decoration: none;
+}
+
+.users button {
+    display: block;
+    float: right;
+    width: 75px;
+    height: 40px;
+    font-size: small;
+    margin: 15px;
+}
+
+.users h5 {
+    display: inline;
+    position: relative;
+    font-weight: bold;
+    bottom: 10px;
+    padding-left: 5px;
+    font-size: 110%;
+    color: rgb(233, 233, 241);
+}
+
+.users h6 {
+    position: relative;
+    left: 90px;
+    bottom: 35px;
+    color: rgb(233, 233, 241);
+}
+
+.users img {
+    margin: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.users li {
+    list-style: none;
+    display: inline;
+    position: relative;
+    bottom: 15px;
+    padding-left: 10px;
+}
+
+.users li a {
+    color: rgb(233, 233, 241);
+}
+
+.konu {
+    width: 100%;
+}
+
+.konu a {
+    font-size: 80%;
+    color: rgb(233, 233, 239);
+}
+
+.konu a:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+
+
+/* sidebar */
+.sidebar {
+    padding-top: 20px;
+    height: 400px;
+    border: 1px solid rgb(65, 65, 65);
+    border-radius: 5px;
+}
+
+#sidebarLeft {
+    position: fixed;
+    height: 500px !important;
+    border: none !important;
+    margin-left: -4.3% !important;
+}
+
+#sidebarLeft .profilDiv ul li {
+    list-style: none;
+    padding-bottom: 60px;
+    font-size: 20px;
+}
+
+#sidebarLeft .profilDiv {
+    width: 220px;
+}
+
+#sidebarLeft .profilDiv ul li a {
+    display: block;
+    padding: 15px;
+    margin-top: -15px !important;
+    margin-bottom: -15px !important;
+    margin: 0;
+    border-radius: 5px;
+    width: 150px;
+    color: rgb(233, 233, 239);
+}
+
+#sidebarLeft .profilDiv ul li a:hover {
+    text-decoration: none;
+    opacity: 0.8;
+    background-color: rgb(24, 24, 27);
+}
+
+#sidebarLeft .profilDiv ul li a img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+}
+
+.sticky-offset-konular {
+    padding-bottom: 10px;
+    background-color: rgb(14, 14, 16);
+    box-shadow: 10px 10px 10px rgb(14, 14, 16);
+    top: 55px;
+}
+
+.sticky-offset-sidebarleft {
+    top: 121px;
+}
+
+.sticky-offset-sidebarright {
+    top: 136px;
+}
+
+#sidebarRight {
+    padding: 15px;
+    margin-left: 178px;
+}
+
+#baslik h4 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: large;
+    color: rgb(233, 233, 239);
+}
+
+
+#arama {
+    width: 500px;
+}
+
+#sidebarLeft .profilDiv ul li button {
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    display: block;
+    padding: 15px;
+    margin-top: -15px !important;
+    margin-bottom: -15px !important;
+    margin: 0;
+    border-radius: 5px;
+    width: 150px;
+    color: rgb(233, 233, 239);
+}
+
+#sidebarLeft .profilDiv ul li button:hover {
+    text-decoration: none;
+    opacity: 0.8;
+    background-color: rgb(24, 24, 27);
+}
+
+#sidebarLeft .profilDiv ul li button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+#girisYap {
+    color: rgb(233, 233, 239);
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+#girisYap:hover {
+    background-color: rgb(65, 65, 65);
+    opacity: .8;
+}
+
+#kayitOl {
+    color: rgb(233, 233, 239);
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+#kayitOl:hover {
+    background-color: rgb(65, 65, 65);
+    opacity: .8;
+}
+
+
+/*post*/
+
+.content {
+    min-height: 800px;
+    margin-right: -160px !important;
+    margin-left: 180px !important;
+    margin-top: 56px;
+    padding: 0;
+}
+
+.post {
+    display: block;
+    font-size: medium;
+    padding: 15px;
+    color: rgb(233, 233, 239);
+    border-radius: 5px;
+    margin-bottom: 15px;
+    height: auto;
+    border: .55px solid rgb(65, 65, 65);
+}
+
+.post:hover {
+    background-color: rgb(24, 24, 27);
+}
+
+.icerik {
+    display: block;
+    position: relative;
+    bottom: 35px;
+    color: rgb(233, 233, 239);
+    margin-left: 50px !important;
+}
+
+
+.post p {
+    padding-top: 10px;
+    font-size: 85%;
+}
+
+.tercihler {
+    position: relative;
+    float: right;
+    bottom: 10px;
+    left: 10px;
+}
+
+.tercihler a {
+    color: rgb(233, 233, 239);
+}
+
+.tercihler .btn {
+    background-color: transparent;
+    border: 0px solid transparent;
+}
+
+.tercihler .btn {
+    background-color: transparent;
+    border: 0;
+}
+
+.tercihler .btn:hover {
+    background-color: rgb(45, 45, 55);
+    border: 0;
+}
+
+.tercihler .btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.tercihler .btn:active {
+    background-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.tercihler .dropdown-menu {
+    width: 180px;
+    background-color: rgb(41, 41, 41);
+    z-index: 10000;
+}
+
+.tercihler .dropdown-menu li {
+    background-color: rgb(41, 41, 41);
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.tercihler .dropdown-menu li:hover {
+    text-decoration: none;
+    background-color: rgb(61, 61, 61);
+}
+
+.tercihler .dropdown-menu li a:hover {
+    text-decoration: none;
+}
+
+
+.post-footer {
+    display: block;
+    position: relative;
+    bottom: 40px;
+    margin-bottom: -40px;
+    padding-left: 30%;
+}
+
+.post-footer a {
+    margin-right: 55px;
+    color: rgb(233, 233, 239);
+}
+
+.post-footer a:hover {
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+.post-footer a span {
+    text-decoration: none;
+    font-size: 80%;
+    padding-left: 2px;
+    color: rgb(233, 233, 239);
+}
+
+.title {
+    display: block;
+    position: relative;
+    bottom: 35px;
+    margin-top: 35px;
+    margin-left: 50px;
+    font-weight: 700;
+}
+
+.info {
+    padding-top: 0;
+    padding-right: 5px;
+    margin: 0;
+}
+
+.info p {
+    float: right;
+}
+
+.post span a {
+    color: rgb(233, 233, 239);
+}
+
+.post span a:hover {
+    text-decoration: none !important;
+    opacity: 0.8;
+}
+
+.resimDiv {
+    float: left;
+
+}
+
+.resimDiv img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    float: left;
+}
+
+.resimBilgi img {
+    margin-left: 15px;
+}
+
+.resimDiv .resimBilgi {
+    display: inline-block;
+    left: 275px;
+    margin-top: 20px;
+    width: 320px;
+    height: 120px;
+    background-color: rgb(65, 65, 65);
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity .5s ease-in-out;
+    border-radius: 10px;
+}
+.users .resimBilgi {
+    display: inline-block;
+    position: absolute;
+    width: 320px;
+    height: 120px;
+    left: 100px;
+    margin-top: 40px; 
+    background-color: rgb(65, 65, 65);
+    color: #fff;
+    text-align: center;   
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity .5s ease-in-out;
+    border-radius: 10px;
+}
+
+.resimDiv {
+    width: 40px;
+    height: 40px;
+}
+
+
+.user-name a {
+    position: relative;
+    text-decoration: none;
+    width: 50px;
+    left: 10px;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(233, 233, 241);
+    font-size: 85%;
+}
+
+.user-name a:hover {
+    text-decoration: none;
+}
+
+.resimDiv:hover .resimBilgi {
+    visibility: visible;
+    opacity: 1;
+}
+
+.users:hover .resimBilgi {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+
+.resimBilgi ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 15px;
+}
+
+.resimBilgi h5 {
+    margin-top: 20px;
+}
+
+.resimBilgi .btn {
+    background-color: rgb(233, 233, 241);
+    border: 0;
+    color: rgb(14, 14, 16);
+}
+
+.resimBilgi .btn:hover {
+    opacity: .8;
+}
+
+.resimBilgi ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.resimBilgi ul li a:hover {
+    opacity: .8;
+}
+
+body.modal-open {
+    margin-right: 0 !important;
+    padding-right: 25px !important;
+}
+
+.modal-body input[type="text"] {
+    display: inline;
+}

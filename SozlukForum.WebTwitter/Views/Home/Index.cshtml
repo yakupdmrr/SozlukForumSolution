@@ -1,0 +1,1342 @@
+﻿@model IEnumerable<SozlukForum.WebTwitter.Models.ViewModeller.PaylasimViewModel>
+
+@using SozlukForum.İs.Concrete;
+@using SozlukForum.İs.Concrete.Yonetimler;
+@using SozlukForum.VeriErisim.Concrete.Sql;
+
+@{
+    SozlukForum.WebTwitter.Models.SozlukEntitiesTest entities = new SozlukForum.WebTwitter.Models.SozlukEntitiesTest();
+    KullaniciYonetimi kullaniciYonetimi = KullaniciYonetimi.NesneUret();
+    var login = User.Identity.Name;
+    var kullanici = kullaniciYonetimi.EpostaIleGetir(login);
+    var kullaniciAyarlar = entities.Kullanicilar.Where(w => w.KullaniciAdi == kullanici.KullaniciAdi).FirstOrDefault();
+    var simdikiZaman = DateTime.Now;
+}
+@{
+    ViewBag.Title = "Misal Sözlük";
+}
+
+
+@section css{
+    <style type="text/css">
+        .paylasimResmi {
+            width: 265px;
+            height: 175px;
+        }
+
+        .fancybox {
+            margin: 3px auto;
+        }
+    </style>
+
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+}
+
+
+<nav class="fixed-top sticky-offset-konular">
+
+    <ul id="Konu" class="nav nav-tabs mx-auto" role="tablist">
+        <li class="nav-item tabs mx-auto">
+            <a class="nav-link active" data-toggle="tab" href="#anaekran">Anasayfa</a>
+        </li>
+        <li class="nav-item tabs mx-auto">
+            <a class="nav-link" data-toggle="tab" href="#teknoloji">Teknoloji</a>
+        </li>
+        <li class="nav-item tabs mx-auto">
+            <a class="nav-link" data-toggle="tab" href="#spor">Spor</a>
+        </li>
+        <li class="nav-item tabs mx-auto">
+            <a class="nav-link" data-toggle="tab" href="#sinema">Sinema</a>
+        </li>
+        <li class="nav-item tabs mx-auto">
+            <a class="nav-link" data-toggle="tab" href="#sanat">Sanat</a>
+        </li>
+        <li class="nav-item tabs mx-auto">
+            <a class="nav-link" data-toggle="tab" href="#muzik">Müzik</a>
+        </li>
+    </ul>
+</nav>
+
+
+<div class="col-sm-7" style="padding: 15px;">
+    <div class="tab-content mx-auto">
+
+        <div id="anaekran" class="content tab-pane active">
+
+            @foreach (var item in Model)
+            {
+                if (item.Kategori.KategoriId == 1)
+                {
+                    <div class="post">
+                        @if (item.ProfilResmi.ResimYolu != null)
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad @item.Kullanici.Soyad  &nbsp;
+
+
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad @item.Kullanici.Soyad  &nbsp;
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                        <div class="tercihler">
+                            <a href="#" onclick="PaylasimYorumlari('@item.PaylasimId');"><i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                        <div style="padding-bottom:35px;" class="user-name">
+                            <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)">
+
+                                @{
+                                    var girilmeZamani = Convert.ToDateTime(item.GirilmeZamani);
+                                    var simidikiZaman = DateTime.Now;
+                                    TimeSpan span = simdikiZaman.Subtract(girilmeZamani);
+                                }
+
+                                @if (span.TotalMinutes < 60f)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalMinutes.ToString().Split(',')[0] d</span>
+                                }
+                                else if (span.TotalMinutes >= 60f && span.TotalHours < 24)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalHours.ToString().Split(',')[0] s</span>
+                                }
+                                else if (span.TotalHours >= 24 && span.TotalDays < 30)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalDays.ToString().Split(',')[0] g</span>
+                                }
+                                else
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@item.GirilmeZamani.Split(' ')[0] s</span>
+                                }
+
+                            </a>
+                        </div>
+                        <div class="icerik">
+                            <p>
+                                @if (item.PaylasimMetni != null && item.PaylasimResimleri == null)
+                                {
+                                    @(item.PaylasimMetni.GirilenMetin.Length> 150 ? item.PaylasimMetni.GirilenMetin.Substring(0, 147) + "..." : item.PaylasimMetni.GirilenMetin)
+                                }
+                                else if (item.PaylasimMetni == null && item.PaylasimResimleri != null)
+                                {
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </p>
+                        </div>
+                        <div class="post-footer">
+                            <div class="info">
+
+                                <a href="javascript:void(0);" onclick="javascript:PaylasimBil('@item.PaylasimId');">
+                                    <i class="fa fa-comment fa-lg"></i><span id="yr-count-@item.PaylasimId">&nbsp;@item.Yorumlar.Count()</span>
+                                </a>
+
+                                @if (item.EtkilesimLikelar.Where(w => w.BegenenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="false" id="lk-@item.PaylasimId">
+                                        <i style="color:green;" id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="true" id="lk-@item.PaylasimId">
+                                        <i id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+
+                                @if (item.EtkilesimDislikelar.Where(w => w.BegenmeyenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="false" id="dlk-@item.PaylasimId">
+                                        <i style="color:red;" id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="true" id="dlk-@item.PaylasimId">
+                                        <i id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+
+        <div id="teknoloji" class="content tab-pane">
+
+            @foreach (var item in Model)
+            {
+                if (item.Kategori.KategoriId == 2)
+                {
+                    <div class="post">
+                        @if (item.ProfilResmi.ResimYolu != null)
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad  &nbsp;  @item.Kullanici.Soyad  &nbsp;
+
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad @item.Kullanici.Soyad  &nbsp;
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                        <div class="tercihler">
+                            <a href="#" onclick="PaylasimYorumlari('@item.PaylasimId');"><i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                        <div style="padding-bottom:35px;" class="user-name">
+                            <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)">
+
+                                @{
+                                    var girilmeZamani = Convert.ToDateTime(item.GirilmeZamani);
+                                    var simidikiZaman = DateTime.Now;
+                                    TimeSpan span = simdikiZaman.Subtract(girilmeZamani);
+                                }
+
+                                @if (span.TotalMinutes < 60f)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalMinutes.ToString().Split(',')[0] d</span>
+                                }
+                                else if (span.TotalMinutes >= 60f && span.TotalHours < 24)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalHours.ToString().Split(',')[0] s</span>
+                                }
+                                else if (span.TotalHours >= 24 && span.TotalDays < 30)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalDays.ToString().Split(',')[0] g</span>
+                                }
+                                else
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@item.GirilmeZamani.Split(' ')[0] s</span>
+                                }
+                            </a>
+                        </div>
+                        <div class="icerik">
+                            <p>
+                                @if (item.PaylasimMetni != null && item.PaylasimResimleri == null)
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                }
+                                else if (item.PaylasimMetni == null && item.PaylasimResimleri != null)
+                                {
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </p>
+                        </div>
+                        <div class="post-footer">
+                            <div class="info">
+
+                                <a href="javascript:void(0);" onclick="javascript:PaylasimBil('@item.PaylasimId');">
+                                    <i class="fa fa-comment fa-lg"></i><span id="yr-count-@item.PaylasimId">&nbsp;@item.Yorumlar.Count()</span>
+                                </a>
+
+                                @if (item.EtkilesimLikelar.Where(w => w.BegenenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="false" id="lk-@item.PaylasimId">
+                                        <i style="color:green;" id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="true" id="lk-@item.PaylasimId">
+                                        <i id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+
+                                @if (item.EtkilesimDislikelar.Where(w => w.BegenmeyenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="false" id="dlk-@item.PaylasimId">
+                                        <i style="color:red;" id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="true" id="dlk-@item.PaylasimId">
+                                        <i id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div id="spor" class="content tab-pane">
+            @foreach (var item in Model)
+            {
+                if (item.Kategori.KategoriId == 1002)
+                {
+                    <div class="post">
+                        @if (item.ProfilResmi.ResimYolu != null)
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId"><img src="@item.ProfilResmi.ResimYolu"  onclick="ProfilGonder(@item.Kullanici.KullaniciId)" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId"><img src="@item.ProfilResmi.ResimYolu"  onclick="ProfilGonder(@item.Kullanici.KullaniciId)" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad  &nbsp;  @item.Kullanici.Soyad  &nbsp;
+
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad @item.Kullanici.Soyad  &nbsp;
+
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+                                        </h5>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                        <div class="tercihler">
+                            <a href="#" onclick="PaylasimYorumlari('@item.PaylasimId');"><i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                        <div style="padding-bottom:35px;" class="user-name">
+                            <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)">
+
+                                @{
+                                    var girilmeZamani = Convert.ToDateTime(item.GirilmeZamani);
+                                    var simidikiZaman = DateTime.Now;
+                                    TimeSpan span = simdikiZaman.Subtract(girilmeZamani);
+                                }
+
+                                @if (span.TotalMinutes < 60f)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalMinutes.ToString().Split(',')[0] d</span>
+                                }
+                                else if (span.TotalMinutes >= 60f && span.TotalHours < 24)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalHours.ToString().Split(',')[0] s</span>
+                                }
+                                else if (span.TotalHours >= 24 && span.TotalDays < 30)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalDays.ToString().Split(',')[0] g</span>
+                                }
+                                else
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@item.GirilmeZamani.Split(' ')[0] s</span>
+                                }
+                            </a>
+                        </div>
+                        <div class="icerik">
+                            <p>
+                                @if (item.PaylasimMetni != null && item.PaylasimResimleri == null)
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                }
+                                else if (item.PaylasimMetni == null && item.PaylasimResimleri != null)
+                                {
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </p>
+                        </div>
+                        <div class="post-footer">
+                            <div class="info">
+
+                                <a href="javascript:void(0);" onclick="javascript:PaylasimBil('@item.PaylasimId');">
+                                    <i class="fa fa-comment fa-lg"></i><span id="yr-count-@item.PaylasimId">&nbsp;@item.Yorumlar.Count()</span>
+                                </a>
+
+                                @if (item.EtkilesimLikelar.Where(w => w.BegenenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="false" id="lk-@item.PaylasimId">
+                                        <i style="color:green;" id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="true" id="lk-@item.PaylasimId">
+                                        <i id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+
+                                @if (item.EtkilesimDislikelar.Where(w => w.BegenmeyenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="false" id="dlk-@item.PaylasimId">
+                                        <i style="color:red;" id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="true" id="dlk-@item.PaylasimId">
+                                        <i id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div id="sinema" class="content tab-pane">
+            @foreach (var item in Model)
+            {
+                if (item.Kategori.KategoriId == 1003)
+                {
+                    <div class="post">
+                        @if (item.ProfilResmi.ResimYolu != null)
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad  &nbsp;  @item.Kullanici.Soyad  &nbsp;
+
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad @item.Kullanici.Soyad  &nbsp;
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                        <div class="tercihler">
+                            <a href="#" onclick="PaylasimYorumlari('@item.PaylasimId');"><i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                        <div style="padding-bottom:35px;" class="user-name">
+                            <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)">
+
+                                @{
+                                    var girilmeZamani = Convert.ToDateTime(item.GirilmeZamani);
+                                    var simidikiZaman = DateTime.Now;
+                                    TimeSpan span = simdikiZaman.Subtract(girilmeZamani);
+                                }
+
+                                @if (span.TotalMinutes < 60f)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalMinutes.ToString().Split(',')[0] d</span>
+                                }
+                                else if (span.TotalMinutes >= 60f && span.TotalHours < 24)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalHours.ToString().Split(',')[0] s</span>
+                                }
+                                else if (span.TotalHours >= 24 && span.TotalDays < 30)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalDays.ToString().Split(',')[0] g</span>
+                                }
+                                else
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@item.GirilmeZamani.Split(' ')[0] s</span>
+                                }
+                            </a>
+                        </div>
+                        <div class="icerik">
+                            <p>
+                                @if (item.PaylasimMetni != null && item.PaylasimResimleri == null)
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                }
+                                else if (item.PaylasimMetni == null && item.PaylasimResimleri != null)
+                                {
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </p>
+                        </div>
+                        <div class="post-footer">
+                            <div class="info">
+
+                                <a href="javascript:void(0);" onclick="javascript:PaylasimBil('@item.PaylasimId');">
+                                    <i class="fa fa-comment fa-lg"></i><span id="yr-count-@item.PaylasimId">&nbsp;@item.Yorumlar.Count()</span>
+                                </a>
+
+                                @if (item.EtkilesimLikelar.Where(w => w.BegenenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="false" id="lk-@item.PaylasimId">
+                                        <i style="color:green;" id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="true" id="lk-@item.PaylasimId">
+                                        <i id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+
+                                @if (item.EtkilesimDislikelar.Where(w => w.BegenmeyenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="false" id="dlk-@item.PaylasimId">
+                                        <i style="color:red;" id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="true" id="dlk-@item.PaylasimId">
+                                        <i id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div id="sanat" class="content tab-pane">
+            @foreach (var item in Model)
+            {
+                if (item.Kategori.KategoriId == 1004)
+                {
+                    <div class="post">
+                        @if (item.ProfilResmi.ResimYolu != null)
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad  &nbsp;  @item.Kullanici.Soyad  &nbsp;
+
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad @item.Kullanici.Soyad  &nbsp;
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                        <div class="tercihler">
+                            <a href="#" onclick="PaylasimYorumlari('@item.PaylasimId');"><i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                        <div style="padding-bottom:35px;" class="user-name">
+                            <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)">
+
+                                @{
+                                    var girilmeZamani = Convert.ToDateTime(item.GirilmeZamani);
+                                    var simidikiZaman = DateTime.Now;
+                                    TimeSpan span = simdikiZaman.Subtract(girilmeZamani);
+                                }
+
+                                @if (span.TotalMinutes < 60f)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalMinutes.ToString().Split(',')[0] d</span>
+                                }
+                                else if (span.TotalMinutes >= 60f && span.TotalHours < 24)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalHours.ToString().Split(',')[0] s</span>
+                                }
+                                else if (span.TotalHours >= 24 && span.TotalDays < 30)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalDays.ToString().Split(',')[0] g</span>
+                                }
+                                else
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@item.GirilmeZamani.Split(' ')[0] s</span>
+                                }
+                            </a>
+                        </div>
+                        <div class="icerik">
+                            <p>
+                                @if (item.PaylasimMetni != null && item.PaylasimResimleri == null)
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                }
+                                else if (item.PaylasimMetni == null && item.PaylasimResimleri != null)
+                                {
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </p>
+                        </div>
+                        <div class="post-footer">
+                            <div class="info">
+
+                                <a href="javascript:void(0);" onclick="javascript:PaylasimBil('@item.PaylasimId');">
+                                    <i class="fa fa-comment fa-lg"></i><span id="yr-count-@item.PaylasimId">&nbsp;@item.Yorumlar.Count()</span>
+                                </a>
+
+                                @if (item.EtkilesimLikelar.Where(w => w.BegenenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="false" id="lk-@item.PaylasimId">
+                                        <i style="color:green;" id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="true" id="lk-@item.PaylasimId">
+                                        <i id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+
+                                @if (item.EtkilesimDislikelar.Where(w => w.BegenmeyenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="false" id="dlk-@item.PaylasimId">
+                                        <i style="color:red;" id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="true" id="dlk-@item.PaylasimId">
+                                        <i id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div id="muzik" class="content tab-pane">
+            @foreach (var item in Model)
+            {
+                if (item.Kategori.KategoriId == 1005)
+                {
+                    <div class="post">
+                        @if (item.ProfilResmi.ResimYolu != null)
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="@item.ProfilResmi.ResimYolu" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad  &nbsp;  @item.Kullanici.Soyad  &nbsp;
+
+
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="resimDiv">
+                                <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                <div class="resimBilgi">
+                                    <div>
+                                        <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)"><img src="~/Content/images/twitter-sozluk.png" alt="Profil"> </a>
+                                        <h5>
+                                            @item.Kullanici.Ad @item.Kullanici.Soyad  &nbsp;
+                                            @if (item.Kullanici.TakipEdildikleri.Contains(kullanici.KullaniciId))
+                                            {
+                                                <a href="#" style="background-color:green;" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="false" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Ediliyor
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" id="takipBtn-@item.Kullanici.KullaniciId" data-follow="true" onclick="TakipEtBirak(@item.Kullanici.KullaniciId,this.id)" class="btn btn-success">
+                                                    Takip Et
+                                                </a>
+                                            }
+                                        </h5>
+                                    </div>
+                                    <div class="text-center">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)"> <span id="TakipEdilen-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEttikleri.Count()</span>  Takip Edlien</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)"><span id="Takipci-count-@item.Kullanici.KullaniciId">@item.Kullanici.TakipEdildikleri.Count() </span>  Takipçi</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                        <div class="tercihler">
+                            <a href="#" onclick="PaylasimYorumlari('@item.PaylasimId');"><i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                        <div style="padding-bottom:35px;" class="user-name">
+                            <a href="../Profile/PaylasimProfil?KullaniciId=@item.Kullanici.KullaniciId" onclick="ProfilGonder(@item.Kullanici.KullaniciId)">
+
+                                @{
+                                    var girilmeZamani = Convert.ToDateTime(item.GirilmeZamani);
+                                    var simidikiZaman = DateTime.Now;
+                                    TimeSpan span = simdikiZaman.Subtract(girilmeZamani);
+                                }
+
+                                @if (span.TotalMinutes < 60f)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalMinutes.ToString().Split(',')[0] d</span>
+                                }
+                                else if (span.TotalMinutes >= 60f && span.TotalHours < 24)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalHours.ToString().Split(',')[0] s</span>
+                                }
+                                else if (span.TotalHours >= 24 && span.TotalDays < 30)
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@span.TotalDays.ToString().Split(',')[0] g</span>
+                                }
+                                else
+                                {
+                                    @item.Kullanici.KullaniciAdi @Html.Raw("-")<span class="zaman small">@item.GirilmeZamani.Split(' ')[0] s</span>
+                                }
+                            </a>
+                        </div>
+                        <div class="icerik">
+                            <p>
+                                @if (item.PaylasimMetni != null && item.PaylasimResimleri == null)
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                }
+                                else if (item.PaylasimMetni == null && item.PaylasimResimleri != null)
+                                {
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    @item.PaylasimMetni.GirilenMetin
+                                    <div class="row">
+                                        @foreach (var img in item.PaylasimResimleri)
+                                        {
+                                            <a class="fancybox" data-fancybox="gallery" href="@img.Resim.ResimYolu">
+                                                <img class="paylasimResmi" src="@img.Resim.ResimYolu" alt="PaylasimResmi" />
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </p>
+                        </div>
+                        <div class="post-footer">
+                            <div class="info">
+
+                                <a href="javascript:void(0);" onclick="javascript:PaylasimBil('@item.PaylasimId');">
+                                    <i class="fa fa-comment fa-lg"></i><span id="yr-count-@item.PaylasimId">&nbsp;@item.Yorumlar.Count()</span>
+                                </a>
+
+                                @if (item.EtkilesimLikelar.Where(w => w.BegenenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="false" id="lk-@item.PaylasimId">
+                                        <i style="color:green;" id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilLike('@item.PaylasimId', this.id)" data-like="true" id="lk-@item.PaylasimId">
+                                        <i id="begeni-@item.PaylasimId" class="fa fa-chevron-up fa-lg"></i> <span id="lk-count-@item.PaylasimId">@item.EtkilesimLikelar.Count()</span>
+                                    </a>
+                                }
+
+                                @if (item.EtkilesimDislikelar.Where(w => w.BegenmeyenKullaniciId == kullanici.KullaniciId).ToList().Count > 0)
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="false" id="dlk-@item.PaylasimId">
+                                        <i style="color:red;" id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="javascript: PaylasimBilDisLike('@item.PaylasimId', this.id)" data-unliked="true" id="dlk-@item.PaylasimId">
+                                        <i id="begenmeme-@item.PaylasimId" class="fa fa-chevron-down fa-lg"></i><span id="dlk-count-@item.PaylasimId">@item.EtkilesimDislikelar.Count()</span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myPaylasimModal" tabindex="-1" role="dialog" aria-labelledby="myPaylasimModal-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myPaylasimModal-label">Paylaşım</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="paylasim_Yap" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <label for="Kategori">Kategori Seçin</label>
+
+                        <select name="KategoriAdi" class="form-control" id="KategoriAdi">
+                            <option id="KategoriAdi" value="Anasayfa">Anasayfa</option>
+                            <option id="KategoriAdi" value="Teknoloji">Teknoloji</option>
+                            <option id="KategoriAdi" value="Spor">Spor</option>
+                            <option id="KategoriAdi" value="Sinema">Sinema</option>
+                            <option id="KategoriAdi" value="Sanat">Sanat</option>
+                            <option id="KategoriAdi" value="Müzik">Müzik</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="GirilenMetin">Metin</label>
+                        <textarea id="PaylasimMetni" name="PaylasimMetni" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="KullanilanResim">Paylasim Resmi</label>
+                        <input type="file" id="PaylasimResimleri" name="PaylasimResimleri" multiple accept="image/*" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" onclick="PaylasımEkle()" class="btn btn-dark">Paylaşım Yap</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myAyarlarModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Ayarlar</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <form id="ayarlar_form" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="KullaniciAdi">Kullanıcı Adı</label>
+                        <input type="text" name="KullaniciAdi" id="KullaniciAdi" class="form-control" value="@kullaniciAyarlar.KullaniciAdi" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <label for="Parola">Parola</label>
+                                <input type="password" name="Parola" id="Parola" class="form-control" value="@kullaniciAyarlar.Parola" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <i style="margin:40px auto; cursor:pointer;" class="fa fa-eye" onclick="SifreGoster()"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ProfilResmi">Profil Resmi</label>
+                        <input type="file" name="ProfilResmi" id="ProfilResmi" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" onclick="AyarlarDuzenle()" class="btn btn-secondary">Kaydet</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myYorumModal" tabindex="-1" role="dialog" aria-labelledby="myYorumModal-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myYorumModal-label">Yorum Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="yorum_form" method="post">
+                    <div class="form-group">
+                        <label for="YorumMetni">Yorum Metni</label>
+                        <textarea class="form-control" name="YorumMetni" id="YorumMetni"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="YorumResimleri">Yorum Resimleri</label>
+                        <input type="file" name="YorumResimleri" multiple accept="image/*" id="YorumResimleri" class="form-control" />
+                    </div>
+                    <input type="hidden" id="PaylasimId" name="PaylasimId" value="" />
+                    <button type="button" class="btn btn-dark" onclick="YorumYap()">Yorum Yap</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        //Yorum İşlemi
+        function YorumYap() {
+            var formdata = new FormData(document.getElementById("yorum_form"));
+
+            $.ajax({
+                type: "POST",
+                url: "../Yorum/YorumEkle",
+                data: formdata,
+                async: true,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.drm) {
+                        swal({
+                            title: "Yorum Yapma",
+                            text: "Başarıyla Yorum Yapıldı.",
+                            type: 'success',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Tamam',
+                            html: true
+                        }, function () {
+                            let count = parseInt($('#yr-count-' + seciliYorum).text().trim());
+                            count++;
+                            $('#yr-count-' + seciliYorum).html(' ' + count);
+                            seciliYorum = "";
+                            $('#myYorumModal').modal('hide');
+                        });
+                    }
+                }, error: function (data) {
+                    console.log(data.responseText);
+                }
+            });
+        }
+        var seciliYorum = "";
+        function PaylasimBil(PaylasimId) {
+            seciliYorum = PaylasimId;
+            $('#PaylasimId').val(seciliYorum);
+            $('#myYorumModal').modal('show');
+        }
+        $('#myYorumModal').on('hidden.bs.modal', function (e) {
+            seciliYorum = "";
+            $('#PaylasimId').val("");
+        });
+
+        //Sayfa Yönlendirme
+        function PaylasimYorumlari(page) {
+            sessionStorage.setItem('Page', page);
+            window.location.href = '../Yorum/Index?PaylasimId=' + page;
+        }
+    </script>
+}
+
+

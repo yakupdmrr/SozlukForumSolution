@@ -1,0 +1,101 @@
+body,
+html {
+    height: 100%;
+    background-color: rgb(14, 14, 16);
+}
+
+.giris {
+    margin-top: 50px;
+    padding: 15px;
+    height: 300px;
+}
+
+.giris p {
+    color: rgb(233, 233, 241);
+    font-size: x-large;
+    text-align: center;
+    padding-top: 25px;
+}
+
+.baslik {
+    display: block;
+    position: relative;
+}
+
+.baslik h1 {
+    text-align: center;
+    font-size: 250%;
+    font-weight: bold;
+    color: khaki;
+}
+
+
+
+
+input[type=text] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 12px;
+    box-sizing: border-box;
+}
+
+label {
+    color: khaki;
+}
+
+.form-control {
+    background-color: rgb(24, 24, 27);
+    border: 0;
+}
+
+button[type=submit] {
+    display: block;
+    margin: 0 auto;
+    background-color: rgb(24, 24, 27);
+    border: 0;
+    width: 80px !important;
+}
+
+button[type=submit]:hover {
+    background-color: rgb(31, 31, 36);
+}
+
+input[type=email]{
+    border: 0;
+    color: rgb(233, 233, 239);
+    background-color: rgb(31, 31, 36);
+}
+
+input[type=password]{
+    border: 0;
+    background-color: rgb(31, 31, 36);
+    color: rgb(233, 233, 239);
+}
+
+input[type=email]:focus {
+    background-color: rgb(31, 31, 36);
+    color: rgb(233, 233, 239);
+    border-color: rgb(31, 31, 36) !important;
+    box-shadow: 0 0 5px rgb(41, 41, 46, 1) !important;
+}
+
+input[type=password]:focus {
+    background-color: rgb(31, 31, 36);
+    color: rgb(233, 233, 239);
+    border-color: rgb(31, 31, 36) !important;
+    box-shadow: 0 0 5px rgb(41, 41, 46, 1) !important;
+}
+
+
+
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+input:-webkit-autofill {
+    -webkit-text-fill-color: rgb(233, 233, 239) !important;
+}

@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{951CD24E-7924-47C6-8C14-3D5F4845DD8E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SozlukForum.İs</RootNamespace>
+    <AssemblyName>SozlukForum.İs</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstracts\Servisler\IBlokBilgiServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IBlokPaylasimServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IPaylasimMetniServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IPaylasimResmiServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IPaylasimServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IEtkilesimDislikeServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IEtkilesimLikeServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IEtkilesimServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IKategoriServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IKullaniciServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IProfilResmiServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IRaporBilgiServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IRaporlananPaylasimServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IResimServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IYorumMetniServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IYorumResmiServisi.cs" />
+    <Compile Include="Abstracts\Servisler\IYorumServisi.cs" />
+    <Compile Include="Abstracts\Secimler\IVeritabaniFabrikasi.cs" />
+    <Compile Include="Abstracts\Secimler\Veritabani.cs" />
+    <Compile Include="Concrete\Secimler\Fabrikalar\SQLFabrikasi.cs" />
+    <Compile Include="Concrete\Secimler\SQL.cs" />
+    <Compile Include="Concrete\Secimler\VeritabaniSecimi.cs" />
+    <Compile Include="Concrete\Yonetimler\BlokBilgisiYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\BlokPaylasimYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\PaylasimMetniYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\PaylasimResmiYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\PaylasimYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\EtkilesimDislikeYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\EtkilesimLikeYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\EtkilesimYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\KategoriYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\KullaniciYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\ProfilResmiYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\RaporBilgiYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\RaporlananPaylasimYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\ResimYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\YorumMetniYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\YorumResmiYonetimi.cs" />
+    <Compile Include="Concrete\Yonetimler\YorumYonetimi.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SozlukForum.VeriErisim\SozlukForum.VeriErisim.csproj">
+      <Project>{6DA7489F-94C0-456B-9965-C2BE385C069C}</Project>
+      <Name>SozlukForum.VeriErisim</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SozlukForum.Veriler\SozlukForum.Veriler.csproj">
+      <Project>{4169FA83-B558-4769-8696-8908279DB457}</Project>
+      <Name>SozlukForum.Veriler</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
